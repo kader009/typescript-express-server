@@ -1,6 +1,8 @@
-import express, { NextFunction, Request, Response } from 'express';
-const app = express();
+import express, { NextFunction, Request, Response } from 'express'; 
+const app = express(); 
 export const port = 3000;
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 // parser
 app.use(express.json());
