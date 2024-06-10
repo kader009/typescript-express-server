@@ -64,12 +64,37 @@ courseRouter.post('/create-course', (req, res) => {
         data: course,
     });
 });
-app.get('/', logger, (req, res) => {
-    console.log(req.params);
-    res.send('Hello Developer World!');
+app.get('/', logger, (req, res, next) => {
+    try {
+        res.send(hello);
+    }
+    catch (error) {
+        console.log(error);
+        next(error);
+        // res.status(400).json({
+        //   success: false,
+        //   message: 'failed to get data',
+        // });
+    }
 });
 app.post('/', logger, (req, res) => {
     console.log(req.body);
     res.send('data');
+});
+app.all('*', (req, res) => {
+    res.status(400).json({
+        success: false,
+        message: 'Route not found!',
+    });
+});
+// global error
+app.use((error, req, res, next) => {
+    // console.log(error);
+    if (error) {
+        res.status(400).json({
+            success: false,
+            message: 'something went wrong!',
+        });
+    }
 });
 exports.default = app;
